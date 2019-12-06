@@ -1,0 +1,27 @@
+{
+  "name": "webservices-back-app",
+  "version": "1.0.0",
+  "description": "REST API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaoSup/webservices-back-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NaoSup/webservices-back-app/issues"
+  },
+  "homepage": "https://github.com/NaoSup/webservices-back-app#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "hapi": "^18.1.0",
+    "joi": "^14.3.1",
+    "mysql2": "^2.0.2",
+    "sequelize": "^5.21.2"
+  }
+}
