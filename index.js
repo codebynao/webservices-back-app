@@ -3,6 +3,7 @@
 require('dotenv').config()
 
 const Hapi = require('hapi')
+const models = require('./models')
 
 // Init server
 const init = async () => {
@@ -12,19 +13,19 @@ const init = async () => {
   })
 
   // Init DB connection
-  require('./lib/dbConnection')()
+  await models.sequelize.sync()
 
-  // Import routes
+  // Home route
   server.route({
     path: '/',
     method: 'GET',
     handler: function(request, h) {
-      return 'Hello hapi'
+      return 'Hello from Webservices API'
     }
   })
 
-  // ROUTING PLUGIN
-  // await server.register([require('./routes/user')])
+  // Routes
+  await server.register([require('./routes/client')])
 
   await server.start()
   console.log(`Server running at: ${server.info.uri}`)
