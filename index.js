@@ -9,7 +9,10 @@ const models = require('./models')
 const init = async () => {
   const server = Hapi.Server({
     host: process.env.HOST || 'localhost',
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3000,
+    routes: {
+      cors: true
+    }
   })
 
   // Init DB connection
