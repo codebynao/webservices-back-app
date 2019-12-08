@@ -20,11 +20,12 @@ class Ville {
 
   async getCity(req, h) {
     try {
-      const client = await VilleModel.findOne({
-        where: { id_ville: req.params.id }
+      const city = await VilleModel.findOne({
+        where: { id_ville: req.params.id },
+        raw: true
       })
 
-      if (!client) {
+      if (!city) {
         return lib.formatErrorResponse(
           404,
           `La ville ayant l'identifiant ${req.params.id} est introuvable`,
@@ -34,7 +35,7 @@ class Ville {
 
       return {
         code: 200,
-        data: client
+        data: city
       }
     } catch (error) {
       return lib.formatErrorResponse(500, error)

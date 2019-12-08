@@ -22,7 +22,8 @@ class Client {
   async getClient(req, h) {
     try {
       const client = await ClientModel.findOne({
-        where: { id_client: req.params.id }
+        where: { id_client: req.params.id },
+        raw: true
       })
 
       if (!client) {
