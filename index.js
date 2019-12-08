@@ -28,7 +28,7 @@ const init = async () => {
   })
 
   // Routes
-  await server.register([require('./routes/client')])
+  await server.register([require('./routes/client'), require('./routes/ville')])
 
   await server.start()
   console.log(`Server running at: ${server.info.uri}`)
