@@ -1,36 +1,29 @@
 'use strict'
+
 module.exports = (sequelize, DataTypes) => {
-  const Client = sequelize.define(
-    'client',
+  const Produit = sequelize.define(
+    'produit',
     {
-      id_client: {
+      id_produit: {
         type: DataTypes.INTEGER(11),
         primaryKey: true
       },
-      nom: {
+      libelle: {
         type: DataTypes.STRING(150),
         allowNull: false
       },
-      prenom: {
-        type: DataTypes.STRING(150),
+      prix_unitaire: {
+        type: DataTypes.DECIMAL(15, 3),
         allowNull: false
       },
-      adresse: {
-        type: DataTypes.STRING(250)
-      },
-      date_naissance: {
-        type: DataTypes.DATE
-      },
-      civilite: {
-        type: DataTypes.CHAR(1)
-      },
-      numero: {
-        type: DataTypes.CHAR(5),
+      reference: {
+        type: DataTypes.CHAR(8),
         allowNull: false,
         unique: true
       },
-      id_ville: {
-        type: DataTypes.BIGINT(20)
+      id_fournisseur: {
+        type: DataTypes.INTEGER(11),
+        allowNull: false
       }
     },
     {
@@ -39,5 +32,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   )
 
-  return Client
+  return Produit
 }
