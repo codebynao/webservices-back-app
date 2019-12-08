@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       id_produit: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        primaryKey: true
       },
       id_commande: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        primaryKey: true
       },
       quantite: {
         type: DataTypes.INTEGER(11),
