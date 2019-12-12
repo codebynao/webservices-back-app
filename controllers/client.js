@@ -10,7 +10,12 @@ const Op = require('sequelize').Op
 class Client {
   async getAllClients(req, h) {
     try {
-      const clients = await ClientModel.findAll({ raw: true })
+      const clients = await ClientModel.findAll({
+        where: {
+          is_deleted: 0
+        },
+        raw: true
+      })
 
       for (const client of clients) {
         // Get client's orders
@@ -149,7 +154,10 @@ class Client {
 
   async deleteClient(req, h) {
     try {
-      await ClientModel.destroy({ where: { id_client: req.params.id } })
+      await ClientModel.update(
+        { is_deleted: 1 },
+        { where: { id_client: req.params.id }, raw: true }
+      )
       return {
         code: 204,
         data: true // No client to return but still shows that request was successful
