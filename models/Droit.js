@@ -1,26 +1,31 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Droit = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'droit',
     {
       chemin: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true
       },
       id_user: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'user',
+          key: 'id_user'
+        }
       },
       type_droit: {
-        type: DataTypes.STRING
+        type: "SET('LECTURE','ECRITURE')",
+        allowNull: true
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'droit',
+      timestamps: false
     }
   )
-
-  return Droit
 }

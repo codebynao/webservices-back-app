@@ -1,31 +1,36 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Livraison = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'livraison',
     {
       id_livraison: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       mode: {
         type: DataTypes.STRING(10),
         allowNull: false
       },
       date_livraison: {
-        type: DataTypes.DATE
+        type: DataTypes.DATEONLY,
+        allowNull: true
       },
       id_facture: {
         type: DataTypes.INTEGER(11),
         allowNull: false,
+        references: {
+          model: 'facture',
+          key: 'id_facture'
+        },
         unique: true
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'livraison',
+      timestamps: false
     }
   )
-
-  return Livraison
 }

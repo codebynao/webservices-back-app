@@ -1,12 +1,14 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Service = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'service',
     {
       id_service: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       nom: {
         type: DataTypes.STRING(50),
@@ -15,19 +17,16 @@ module.exports = (sequelize, DataTypes) => {
       id_activite: {
         type: DataTypes.INTEGER(11),
         allowNull: false,
-        unique: true
-      },
-      id_responsable: {
-        type: DataTypes.INTEGER(11),
-        allowNull: false,
+        references: {
+          model: 'activite',
+          key: 'id_activite'
+        },
         unique: true
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'service',
+      timestamps: false
     }
   )
-
-  return Service
 }

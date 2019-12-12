@@ -1,24 +1,30 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'user',
     {
       id_user: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       login: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
+        allowNull: true
       },
       nom: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
+        allowNull: true
       },
       password: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
+        allowNull: true
       },
       prenom: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
+        allowNull: true
       },
       email: {
         type: DataTypes.STRING(255),
@@ -26,15 +32,13 @@ module.exports = (sequelize, DataTypes) => {
         unique: true
       },
       profil: {
-        type: DataTypes.INTEGER(1),
+        type: DataTypes.BOOLEAN,
         allowNull: false
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'user',
+      timestamps: false
     }
   )
-
-  return User
 }

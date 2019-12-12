@@ -1,12 +1,14 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Ville = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'ville',
     {
       id_ville: {
-        type: DataTypes.BIGINT(20),
-        primaryKey: true
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       nom: {
         type: DataTypes.STRING(150),
@@ -14,21 +16,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       code_postal: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       code_pays: {
-        type: DataTypes.CHAR(2)
-      },
-      id_maire: {
-        type: DataTypes.INTEGER(11),
-        unique: true
+        type: DataTypes.CHAR(2),
+        allowNull: true,
+        references: {
+          model: 'pays',
+          key: 'code_pays'
+        }
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'ville',
+      timestamps: false
     }
   )
-
-  return Ville
 }

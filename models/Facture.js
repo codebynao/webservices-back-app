@@ -1,15 +1,18 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Facture = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'facture',
     {
       id_facture: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       date_facture: {
-        type: DataTypes.DATE
+        type: DataTypes.DATEONLY,
+        allowNull: true
       },
       numero: {
         type: DataTypes.STRING(10),
@@ -18,18 +21,25 @@ module.exports = (sequelize, DataTypes) => {
       id_commande: {
         type: DataTypes.INTEGER(11),
         allowNull: false,
+        references: {
+          model: 'commande',
+          key: 'id_commande'
+        },
         unique: true
       },
       id_paiement: {
         type: DataTypes.INTEGER(11),
+        allowNull: true,
+        references: {
+          model: 'paiement',
+          key: 'id_paiement'
+        },
         unique: true
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'facture',
+      timestamps: false
     }
   )
-
-  return Facture
 }

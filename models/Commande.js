@@ -1,15 +1,17 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Commande = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'commande',
     {
       id_commande: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       date_commande: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false
       },
       numero: {
@@ -19,14 +21,16 @@ module.exports = (sequelize, DataTypes) => {
       },
       id_client: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'client',
+          key: 'id_client'
+        }
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'commande',
+      timestamps: false
     }
   )
-
-  return Commande
 }
