@@ -11,7 +11,10 @@ const lib = require('../lib')
 class Ville {
   async getOrders(req, h) {
     try {
-      const orders = await CommandeModel.findAll({ raw: true })
+      const orders = await CommandeModel.findAll({
+        ...(req.query.limit && { limit: req.query.limit }),
+        raw: true
+      })
       for (const order of orders) {
         const products = await CommandeProduitModel.findAll({
           where: { id_commande: order.id_commande },
@@ -34,6 +37,7 @@ class Ville {
     try {
       const orders = await CommandeModel.findAll({
         where: { id_client: req.params.clientId },
+        ...(req.query.limit && { limit: req.query.limit }),
         raw: true
       })
 
