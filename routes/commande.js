@@ -28,6 +28,16 @@ const Commande = {
       },
       {
         method: 'GET',
+        path: '/commandes',
+        config: {
+          auth: false
+        },
+        handler: async (req, h) => {
+          return await CommandeController.getOrders(req, h)
+        }
+      },
+      {
+        method: 'GET',
         path: '/commandes/{id}',
         config: {
           auth: false,
