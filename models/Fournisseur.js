@@ -1,26 +1,31 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Fournisseur = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'fournisseur',
     {
       id_fournisseur: {
         type: DataTypes.INTEGER(11),
-        primaryKey: true
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
       },
       nom: {
         type: DataTypes.STRING(150),
         allowNull: false
       },
       id_ville: {
-        type: DataTypes.BIGINT(20)
+        type: DataTypes.BIGINT,
+        allowNull: true,
+        references: {
+          model: 'ville',
+          key: 'id_ville'
+        }
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'fournisseur',
+      timestamps: false
     }
   )
-
-  return Fournisseur
 }

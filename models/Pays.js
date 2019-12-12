@@ -1,11 +1,12 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const Pays = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'pays',
     {
       code_pays: {
         type: DataTypes.CHAR(2),
+        allowNull: false,
         primaryKey: true
       },
       nom: {
@@ -14,10 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'pays',
+      timestamps: false
     }
   )
-
-  return Pays
 }

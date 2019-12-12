@@ -1,23 +1,31 @@
-'use strict'
+/* jshint indent: 2 */
 
-module.exports = (sequelize, DataTypes) => {
-  const ProduitCategorie = sequelize.define(
+module.exports = function(sequelize, DataTypes) {
+  return sequelize.define(
     'produit_categorie',
     {
       id_categorie: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'categorie',
+          key: 'id_categorie'
+        }
       },
       id_produit: {
         type: DataTypes.INTEGER(11),
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'produit',
+          key: 'id_produit'
+        }
       }
     },
     {
-      freezeTableName: true, // Avoid changing the table name to plural
-      timestamps: false // ignore createdAt and updatedAt
+      tableName: 'produit_categorie',
+      timestamps: false
     }
   )
-
-  return ProduitCategorie
 }
