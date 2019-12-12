@@ -19,6 +19,9 @@ const Commande = {
               clientId: Joi.string()
                 .max(11)
                 .required()
+            },
+            query: {
+              limit: Joi.number().optional()
             }
           }
         },
@@ -30,7 +33,12 @@ const Commande = {
         method: 'GET',
         path: '/commandes',
         config: {
-          auth: false
+          auth: false,
+          validate: {
+            query: {
+              limit: Joi.number().optional()
+            }
+          }
         },
         handler: async (req, h) => {
           return await CommandeController.getOrders(req, h)
