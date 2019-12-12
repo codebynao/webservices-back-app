@@ -2,6 +2,8 @@
 
 const Models = require('../models')
 const ClientModel = Models.client
+const CommandeModel = Models.commande
+const CommandeProduitModel = Models.commande_produit
 const lib = require('../lib')
 const Op = require('sequelize').Op
 
@@ -10,6 +12,29 @@ class Client {
     try {
       const clients = await ClientModel.findAll({ raw: true })
 
+      for (const client of clients) {
+        // Get client's orders
+        const orders = await CommandeModel.findAll({
+          where: { id_client: client.id_client },
+          attributes: ['id_commande', 'date_commande', 'numero'],
+          limit: 5,
+          raw: true,
+          logging: false
+        })
+
+        // Get products in orders to calculate the total price of the order
+        for (const order of orders) {
+          const products = await CommandeProduitModel.findAll({
+            where: { id_commande: order.id_commande },
+            attributes: ['quantite', 'taux_remise', 'prix_unitaire'],
+            raw: true,
+            logging: false
+          })
+          // Add total order price
+          order.total = lib.getOrderTotalPrice(products)
+        }
+        client.orders = orders
+      }
       return {
         code: 200,
         data: clients
