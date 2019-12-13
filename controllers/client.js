@@ -4,6 +4,7 @@ const Models = require('../models')
 const ClientModel = Models.client
 const CommandeModel = Models.commande
 const CommandeProduitModel = Models.commande_produit
+const VilleModel = Models.ville
 const lib = require('../lib')
 const Op = require('sequelize').Op
 
@@ -39,6 +40,20 @@ class Client {
           order.total = lib.getOrderTotalPrice(products)
         }
         client.orders = orders
+
+        // Get city from client's city
+        const ville = await VilleModel.findOne({
+          where: { id_ville: client.id_ville },
+          raw: true
+        })
+
+        // Format ville with street name, zip code, city and country code
+        if (ville) {
+          client.ville = {
+            code_postal: ville.code_postal,
+            nom: ville.nom
+          }
+        }
       }
       return {
         code: 200,
@@ -62,6 +77,20 @@ class Client {
           `Le client ayant l'identifiant ${req.params.id} est introuvable`,
           true
         )
+      }
+
+      // Get city from client's city
+      const ville = await VilleModel.findOne({
+        where: { id_ville: client.id_ville },
+        raw: true
+      })
+
+      // Format ville with street name, zip code, city and country code
+      if (ville) {
+        client.ville = {
+          code_postal: ville.code_postal,
+          nom: ville.nom
+        }
       }
 
       return {
