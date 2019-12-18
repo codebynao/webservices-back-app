@@ -42,16 +42,13 @@ class Client {
         client.orders = orders
 
         // Get city from client's city
-        const ville = await VilleModel.findOne({
-          where: { id_ville: client.id_ville },
-          raw: true
-        })
+        const city = await VilleModel.findByPk(client.id_ville, { raw: true })
 
         // Format ville with street name, zip code, city and country code
-        if (ville) {
+        if (city) {
           client.ville = {
-            code_postal: ville.code_postal,
-            nom: ville.nom
+            code_postal: city.code_postal,
+            nom: city.nom
           }
         }
       }
@@ -66,10 +63,7 @@ class Client {
 
   async getClient(req, h) {
     try {
-      const client = await ClientModel.findOne({
-        where: { id_client: req.params.id },
-        raw: true
-      })
+      const client = await ClientModel.findByPk(req.params.id, { raw: true })
 
       if (!client) {
         return lib.formatErrorResponse(
@@ -80,16 +74,13 @@ class Client {
       }
 
       // Get city from client's city
-      const ville = await VilleModel.findOne({
-        where: { id_ville: client.id_ville },
-        raw: true
-      })
+      const city = await VilleModel.findByPk(client.id_ville, { raw: true })
 
       // Format ville with street name, zip code, city and country code
-      if (ville) {
+      if (city) {
         client.ville = {
-          code_postal: ville.code_postal,
-          nom: ville.nom
+          code_postal: city.code_postal,
+          nom: city.nom
         }
       }
 
@@ -185,8 +176,17 @@ class Client {
     try {
       await ClientModel.update(
         { is_deleted: 1 },
-        { where: { id_client: req.params.id }, raw: true }
+        { where: { id_client: req.params.id } }
       )
+
+      // Delete client's orders
+      const orders = await CommandeModel.findAll({ id_client: req.params.id })
+
+      const orderPromises = []
+      for (const order of orders) {
+        orderPromises.push(order.update({ is_deleted: 1 }))
+      }
+      await Promise.all(orderPromises)
       return {
         code: 204,
         data: true // No client to return but still shows that request was successful

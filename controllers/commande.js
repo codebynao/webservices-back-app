@@ -8,7 +8,7 @@ const VilleModel = Models.ville
 const ProduitModel = Models.produit
 const lib = require('../lib')
 
-class Ville {
+class Commande {
   async getOrders(req, h) {
     try {
       const orders = await CommandeModel.findAll({
@@ -63,10 +63,7 @@ class Ville {
 
   async getOrder(req, h) {
     try {
-      const order = await CommandeModel.findOne({
-        where: { id_commande: req.params.id },
-        raw: true
-      })
+      const order = await CommandeModel.findByPk(req.params.id, { raw: true })
 
       if (!order) {
         return lib.formatErrorResponse(
@@ -85,8 +82,7 @@ class Ville {
       // Find each order products and add them to order products list
       order.produits = []
       for (const orderProduct of orderProducts) {
-        const product = await ProduitModel.findOne({
-          where: { id_produit: orderProduct.id_produit },
+        const product = await ProduitModel.findByPk(orderProduct.id_produit, {
           raw: true
         })
         if (product) {
@@ -103,10 +99,7 @@ class Ville {
       order.total = lib.getOrderTotalPrice(orderProducts)
 
       // Get client
-      const client = await ClientModel.findOne({
-        where: { id_client: order.id_client },
-        raw: true
-      })
+      const client = await ClientModel.findByPk(order.id_client, { raw: true })
 
       // If no client found, return empty client
       if (!client) {
@@ -118,19 +111,16 @@ class Ville {
       }
 
       // Get city from client's city
-      const ville = await VilleModel.findOne({
-        where: { id_ville: client.id_ville },
-        raw: true
-      })
+      const city = await VilleModel.findByPk(client.id_ville, { raw: true })
 
       // Format ville with street name, zip code, city and country code
-      if (ville) {
+      if (city) {
         const rue = client.adresse
         client.adresse = {
           rue,
-          code_postal: ville.code_postal,
-          ville: ville.nom,
-          code_pays: ville.code_pays
+          code_postal: city.code_postal,
+          ville: city.nom,
+          code_pays: city.code_pays
         }
       }
 
@@ -146,4 +136,4 @@ class Ville {
   }
 }
 
-module.exports = new Ville()
+module.exports = new Commande()

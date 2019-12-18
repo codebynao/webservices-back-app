@@ -20,12 +20,7 @@ class Ville {
 
   async getCityById(req, h) {
     try {
-      const city = await VilleModel.findOne({
-        where: {
-          id_ville: req.params.id
-        },
-        raw: true
-      })
+      const city = await VilleModel.findByPk(req.params.id, { raw: true })
 
       if (!city) {
         return lib.formatErrorResponse(

@@ -26,6 +26,10 @@ module.exports = function(sequelize, DataTypes) {
           model: 'client',
           key: 'id_client'
         }
+      },
+      is_deleted: {
+        type: DataTypes.TINYINT,
+        default: 0
       }
     },
     {
