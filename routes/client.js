@@ -12,7 +12,6 @@ const Client = {
       {
         method: 'GET',
         path: '/clients',
-        config: { auth: false },
         handler: async (req, h) => {
           return await ClientController.getAllClients(req, h)
         }
@@ -21,7 +20,6 @@ const Client = {
         method: 'GET',
         path: '/clients/{id}',
         config: {
-          auth: false,
           validate: {
             params: {
               id: Joi.string()
@@ -38,7 +36,6 @@ const Client = {
         method: 'POST',
         path: '/clients',
         config: {
-          auth: false,
           validate: {
             payload: {
               nom: Joi.string().required(),
@@ -59,7 +56,6 @@ const Client = {
         method: 'PUT',
         path: '/clients/{id}',
         config: {
-          auth: false,
           validate: {
             params: {
               id: Joi.string()
@@ -88,7 +84,6 @@ const Client = {
         method: 'DELETE',
         path: '/clients/{id}',
         config: {
-          auth: false,
           validate: {
             params: {
               id: Joi.string()

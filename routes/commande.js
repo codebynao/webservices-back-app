@@ -13,7 +13,6 @@ const Commande = {
         method: 'GET',
         path: '/commandes/client/{clientId}',
         config: {
-          auth: false,
           validate: {
             params: {
               clientId: Joi.string()
@@ -33,7 +32,6 @@ const Commande = {
         method: 'GET',
         path: '/commandes',
         config: {
-          auth: false,
           validate: {
             query: {
               limit: Joi.number().optional()
@@ -48,7 +46,6 @@ const Commande = {
         method: 'GET',
         path: '/commandes/{id}',
         config: {
-          auth: false,
           validate: {
             params: {
               id: Joi.string()

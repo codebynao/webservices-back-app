@@ -12,7 +12,6 @@ const Ville = {
       {
         method: 'GET',
         path: '/villes',
-        config: { auth: false },
         handler: async (req, h) => {
           return await VilleController.getAllCities(req, h)
         }
@@ -21,7 +20,6 @@ const Ville = {
         method: 'POST',
         path: '/villes',
         config: {
-          auth: false,
           validate: {
             payload: {
               nom: Joi.string().required(),
@@ -41,7 +39,6 @@ const Ville = {
         method: 'GET',
         path: '/villes/zipcode/{zipcode}',
         config: {
-          auth: false,
           validate: {
             params: {
               zipcode: Joi.string()
@@ -58,7 +55,6 @@ const Ville = {
         method: 'GET',
         path: '/villes/{id}',
         config: {
-          auth: false,
           validate: {
             params: {
               id: Joi.string()

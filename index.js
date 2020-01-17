@@ -4,6 +4,8 @@ require('dotenv').config()
 
 const Hapi = require('hapi')
 const models = require('./models')
+const path = require('path');
+const { configureAuth } = require('./lib/auth')
 
 // Init server
 const init = async () => {
@@ -14,6 +16,7 @@ const init = async () => {
       cors: true
     }
   })
+  await configureAuth(server)
 
   // Init DB connection
   await models.sequelize.sync()
@@ -29,6 +32,7 @@ const init = async () => {
 
   // Routes
   await server.register([
+    require('./routes/auth'),
     require('./routes/client'),
     require('./routes/ville'),
     require('./routes/commande')
