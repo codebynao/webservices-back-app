@@ -26,7 +26,7 @@ class Auth {
 
   return { code: 200, token, userId: user.id_user }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return Boom.internal()
     }
   }
 }

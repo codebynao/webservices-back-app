@@ -57,7 +57,7 @@ class Client {
         data: clients
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -67,7 +67,7 @@ class Client {
 
       if (!client) {
         return lib.formatErrorResponse(
-          404,
+          'notFound',
           `Le client ayant l'identifiant ${req.params.id} est introuvable`,
           true
         )
@@ -89,7 +89,7 @@ class Client {
         data: client
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -103,7 +103,7 @@ class Client {
 
       if (clientWithNumero) {
         return lib.formatErrorResponse(
-          400,
+          'badRequest',
           'Ce numéro est déjà utilisé pour un autre client',
           true
         )
@@ -127,7 +127,7 @@ class Client {
         data: createdClient
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -144,7 +144,7 @@ class Client {
 
       if (clientWithNumero) {
         return lib.formatErrorResponse(
-          400,
+          'badRequest',
           'Ce numéro est déjà utilisé pour un autre client',
           true
         )
@@ -168,7 +168,7 @@ class Client {
         data: true // No new client to return but still shows that request was successful
       }
     } catch (err) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -192,7 +192,7 @@ class Client {
         data: true // No client to return but still shows that request was successful
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 }

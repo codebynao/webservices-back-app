@@ -1,6 +1,7 @@
 'use strict'
 
 const authController = require('../controllers/auth')
+const Joi = require('joi')
 
 const Auth = {
   name: 'Auth',
@@ -11,6 +12,14 @@ const Auth = {
       {
         method: 'POST',
         path: '/auth/login',
+        config: {
+          validate: {
+            payload: {
+              email: Joi.string().email().required(),
+              password: Joi.string().required()
+            }
+          }
+        },
         handler: async (request) => {
           return authController.login(request)
         },

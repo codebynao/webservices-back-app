@@ -30,7 +30,7 @@ class Commande {
         data: orders
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
   async getUserOrders(req, h) {
@@ -57,7 +57,7 @@ class Commande {
         data: orders
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -67,7 +67,7 @@ class Commande {
 
       if (!order) {
         return lib.formatErrorResponse(
-          404,
+          'notFound',
           `La commande ayant l'identifiant ${req.params.id} est introuvable`,
           true
         )
@@ -131,7 +131,7 @@ class Commande {
         data: order
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 }

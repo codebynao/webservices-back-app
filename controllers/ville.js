@@ -14,7 +14,7 @@ class Ville {
         data: cities
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -24,7 +24,7 @@ class Ville {
 
       if (!city) {
         return lib.formatErrorResponse(
-          404,
+          'notFound',
           `La ville ayant l'identifiant ${req.params.id} est introuvable`,
           true
         )
@@ -35,7 +35,7 @@ class Ville {
         data: city
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -50,7 +50,7 @@ class Ville {
 
       if (!city) {
         return lib.formatErrorResponse(
-          404,
+          'notFound',
           `La ville ayant le code postal ${req.params.zipcode} est introuvable`,
           true
         )
@@ -61,7 +61,7 @@ class Ville {
         data: city
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 
@@ -73,7 +73,7 @@ class Ville {
 
       if (city) {
         return lib.formatErrorResponse(
-          404,
+          'notFound',
           `La ville ayant le code postal ${req.params.zipcode} existe déjà`,
           true
         )
@@ -94,7 +94,7 @@ class Ville {
         data: createdCity
       }
     } catch (error) {
-      return lib.formatErrorResponse(500, error)
+      return lib.formatErrorResponse('internal', error)
     }
   }
 }
