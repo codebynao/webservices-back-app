@@ -19,6 +19,7 @@
   "homepage": "https://github.com/NaoSup/webservices-back-app#readme",
   "dependencies": {
     "boom": "^7.3.0",
+    "crypto-js": "^3.1.9-1",
     "dotenv": "^8.2.0",
     "glob": "^7.1.6",
     "hapi": "^18.1.0",
